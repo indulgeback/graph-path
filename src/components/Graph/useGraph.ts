@@ -11,7 +11,6 @@ import {
 import { NODE_CONFIGS, EDGE_CONFIGS } from '@/config/graph'
 import { STRATEGY_CONFIGS } from '@/config/strategies'
 import { SearchMode, findAllPaths } from './utils'
-
 export type Strategy = {
   strategyId: number
   strategySource: Node
@@ -93,7 +92,7 @@ const useGraph = () => {
   const initGraph = () => {
     // 创建一个图实例
     graphInstance.value = new Graph({
-      container: document.getElementById('container') as HTMLElement,
+      container: document.getElementById('graph-container') as HTMLElement,
       ...DEFAULT_GRAPH_CONFIG,
     })
 

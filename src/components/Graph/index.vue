@@ -1,6 +1,6 @@
 <template>
   <div class="graph-container">
-    <div class="graph-container-item" id="container"></div>
+    <div class="graph-container-item" id="graph-container"></div>
   </div>
   <Panel
     :strategyList="strategyList"

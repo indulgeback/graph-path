@@ -6,7 +6,9 @@ const PORT_ATTRS = {
       stroke: '#5F95FF',
       strokeWidth: 1,
       fill: '#fff',
-      style: {},
+      style: {
+        visibility: 'hidden',
+      },
     },
   },
 }
