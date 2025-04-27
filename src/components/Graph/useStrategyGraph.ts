@@ -5,6 +5,7 @@ import { Graph } from '@antv/x6'
 const useStrategyGraph = () => {
   const graphInstance = ref<Graph>()
   const graphManager = new GraphManager()
+  const currentSelectedNodeIndex = ref(0)
 
   const initStrategyGraph = (containerId: string) => {
     graphManager.initGraph(containerId)
@@ -22,15 +23,25 @@ const useStrategyGraph = () => {
           if (n.prop('data/canSelect')) {
             n.prop('data/isSelected', false)
           }
+          n.prop('data/showTag', false)
+          n.prop('data/endType', '')
+          n.prop('data/color', '')
         })
         node.prop('data/isSelected', true)
+        node.prop('data/showTag', true)
+        node.prop('data/color', '#1890ff')
+        node.prop(
+          'data/endType',
+          !currentSelectedNodeIndex.value ? '始' : currentSelectedNodeIndex.value,
+        )
       }
     })
   }
 
-  const resetNodeSelectable = (mode: 'start' | 'path' = 'start') => {
+  const resetNodeSelectable = (mode: 'start' | 'path' = 'start', index: number = 0) => {
     const canSelectNodeTypes = ['validator', 'receiver', 'extend']
     const nodes = graphInstance.value?.getNodes()
+    currentSelectedNodeIndex.value = index
 
     const isModeNode = (type: string) => {
       if (mode === 'start') {
@@ -42,6 +53,10 @@ const useStrategyGraph = () => {
 
     nodes?.forEach((node) => {
       const type = node.prop('data/type')
+      node.prop('data/showTag', false)
+      node.prop('data/endType', '')
+      node.prop('data/color', '')
+      node.prop('data/isSelected', false)
 
       if (isModeNode(type)) {
         node.prop('data/canSelect', true)

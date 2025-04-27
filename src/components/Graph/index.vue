@@ -1,5 +1,6 @@
 <template>
   <div class="graph-container">
+    <h1 class="graph-container-title">路径展示图</h1>
     <div class="graph-container-item" id="graph-container1"></div>
     <PathPanel
       :strategyList="strategyList"
@@ -8,6 +9,7 @@
     />
   </div>
   <div class="graph-container">
+    <h1 class="graph-container-title">策略选择图</h1>
     <div class="graph-container-item" id="graph-container2"></div>
     <StrategyPanel @selectNode="resetNodeSelectable" />
   </div>
@@ -32,13 +34,27 @@ onMounted(() => {
 
 <style scoped>
 .graph-container {
-  height: 50vh;
+  height: 80vh;
   position: relative;
-  border: 1px solid #000;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.graph-container + .graph-container {
+  margin-top: 20px;
 }
 
 .graph-container-item {
   width: 100%;
   height: 100%;
+}
+
+.graph-container-title {
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
 }
 </style>
