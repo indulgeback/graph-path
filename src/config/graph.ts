@@ -100,6 +100,7 @@ export const EDGE_CONFIGS: EdgeConfig[] = [
   { source: { cell: 'receiver4', port: 'bottom' }, target: { cell: 'receiver5', port: 'top' } },
   { source: { cell: 'receiver1', port: 'right' }, target: { cell: 'receiver2', port: 'left' } },
   { source: { cell: 'receiver2', port: 'top' }, target: { cell: 'receiver4', port: 'left' } },
+  { source: { cell: 'receiver2', port: 'right' }, target: { cell: 'receiver3', port: 'left' } },
   { source: { cell: 'receiver4', port: 'right' }, target: { cell: 'receiver3', port: 'top' } },
   { source: { cell: 'receiver3', port: 'bottom' }, target: { cell: 'receiver5', port: 'right' } },
 ]

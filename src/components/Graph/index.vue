@@ -6,7 +6,6 @@
     :strategyList="strategyList"
     @changeStrategy="showStrategy"
     @clearStrategy="clearStrategy"
-    @setFindPathMode="setFindPathMode"
   />
 </template>
 
@@ -15,7 +14,7 @@ import { onMounted } from 'vue'
 import useGraph from './useGraph'
 import '@antv/x6-vue-shape'
 import Panel from '../Panel/index.vue'
-const { initGraph, showStrategy, strategyList, clearStrategy, setFindPathMode } = useGraph()
+const { initGraph, showStrategy, strategyList, clearStrategy } = useGraph()
 
 onMounted(() => {
   initGraph()

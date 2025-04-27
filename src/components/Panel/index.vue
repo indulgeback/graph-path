@@ -23,18 +23,11 @@
     <div class="panel-item" @click="clearStrategy">
       <div class="panel-item-title">清除策略</div>
     </div>
-    <div class="panel-item" @click="setFindPathMode(SearchMode.BFS)">
-      <div class="panel-item-title">最少跳数路径</div>
-    </div>
-    <div class="panel-item" @click="setFindPathMode(SearchMode.DFS)">
-      <div class="panel-item-title">所有可达路径</div>
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue'
 import { Node, Edge } from '@antv/x6'
-import { SearchMode } from '@/components/Graph/utils'
 import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css' // for React, Vue and Svelte
 import ArrowDownCircle from '~icons/mdi/arrow-down-circle'
@@ -54,7 +47,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'changeStrategy', strategyId: number): void
   (e: 'clearStrategy'): void
-  (e: 'setFindPathMode', mode: SearchMode): void
 }>()
 
 const notyf = new Notyf({
@@ -87,21 +79,6 @@ const clearStrategy = () => {
     type: 'custom',
   })
   emit('clearStrategy')
-}
-
-const setFindPathMode = (mode: SearchMode) => {
-  if (mode === SearchMode.BFS) {
-    notyf.open({
-      message: '已重新计算为最少跳数路径',
-      type: 'custom',
-    })
-  } else {
-    notyf.open({
-      message: '已重新计算为所有可达路径',
-      type: 'custom',
-    })
-  }
-  emit('setFindPathMode', mode)
 }
 
 const togglePanelHidden = () => {

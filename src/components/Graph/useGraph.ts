@@ -10,7 +10,7 @@ import {
 } from './shape'
 import { NODE_CONFIGS, EDGE_CONFIGS } from '@/config/graph'
 import { STRATEGY_CONFIGS } from '@/config/strategies'
-import { SearchMode, findAllPaths } from './utils'
+import { findMinimalSubGraph } from './utils'
 export type Strategy = {
   strategyId: number
   strategySource: Node
@@ -60,7 +60,6 @@ const useGraph = () => {
   const graphInstance = ref<Graph>()
   const edges = ref<Edge[]>([])
   const strategyList = ref<Strategy[]>([])
-  const findPathMode = ref<SearchMode>(SearchMode.DFS)
 
   // 在 useGraph 函数内添加状态管理
   const animationStore = ref<Map<number, AnimationToken[]>>(new Map())
@@ -140,7 +139,7 @@ const useGraph = () => {
       const targets = config.targets.map((id) => nodeMap.get(id)).filter(Boolean) as Node[]
 
       if (source && targets.length) {
-        const paths = findAllPaths(source, targets, edges.value as Edge[], findPathMode.value)
+        const paths = findMinimalSubGraph(source, targets, edges.value as Edge[])
 
         strategyList.value.push({
           strategyId: config.strategyId,
@@ -329,17 +328,6 @@ const useGraph = () => {
     removeAllAnimations()
   }
 
-  /**
-   * 设置搜索模式
-   * @param mode 搜索模式
-   */
-  const setFindPathMode = (mode: SearchMode) => {
-    strategyList.value = []
-    findPathMode.value = mode
-    clearStrategy()
-    initStrategy()
-  }
-
   return {
     graphInstance,
     initGraph,
@@ -347,7 +335,6 @@ const useGraph = () => {
     strategyList: strategyList.value as Strategy[],
     clearStrategy,
     initStrategy,
-    setFindPathMode,
   }
 }
 
