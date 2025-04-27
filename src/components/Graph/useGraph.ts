@@ -229,7 +229,6 @@ const useGraph = () => {
         port: targetPort,
       },
       shape: 'arrow',
-      connector: { name: 'rounded' },
       attrs: {
         line: {
           stroke: '#b1b8c0',
