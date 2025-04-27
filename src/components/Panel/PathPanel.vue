@@ -5,7 +5,7 @@
       :class="{ 'hidden-button-icon-hidden': panelHidden }"
     />
   </div>
-  <div class="panel-container">
+  <div class="path-panel-container">
     <div
       class="panel-item"
       v-for="strategy in strategyList"
@@ -27,10 +27,10 @@
 </template>
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue'
-import { Node, Edge } from '@antv/x6'
 import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css' // for React, Vue and Svelte
 import ArrowDownCircle from '~icons/mdi/arrow-down-circle'
+import { Edge, Node } from '@antv/x6'
 
 type Strategy = {
   strategyId: number
@@ -82,7 +82,7 @@ const clearStrategy = () => {
 }
 
 const togglePanelHidden = () => {
-  const panel = document.querySelector('.panel-container')
+  const panel = document.querySelector('.path-panel-container')
   if (panel) {
     panel.classList.toggle('hidden')
     panelHidden.value = !panelHidden.value
@@ -90,12 +90,12 @@ const togglePanelHidden = () => {
 }
 </script>
 <style scoped>
-.panel-container {
+.path-panel-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  position: fixed;
+  position: absolute;
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
@@ -110,7 +110,7 @@ const togglePanelHidden = () => {
   overflow-y: auto;
 }
 
-.panel-container.hidden {
+.path-panel-container.hidden {
   opacity: 0;
   max-height: 0;
   padding: 0;
@@ -160,7 +160,7 @@ const togglePanelHidden = () => {
   border-radius: 50%;
   background-color: #f0f0f0;
   transition: all 0.3s ease;
-  position: fixed;
+  position: absolute;
   bottom: 50px;
   left: 50px;
   width: 40px;

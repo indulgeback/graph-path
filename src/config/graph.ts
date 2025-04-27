@@ -3,7 +3,7 @@ export type NodeConfig = {
   x: number
   y: number
   label: string
-  type: 'validator' | 'safe' | 'receiver'
+  type: 'validator' | 'safe' | 'receiver' | 'extend'
   endType?: string
   isEnd?: boolean
 }
@@ -25,6 +25,14 @@ export const NODE_CONFIGS: NodeConfig[] = [
     y: 400,
     label: '验证端',
     type: 'validator',
+    isEnd: true,
+  },
+  {
+    id: 'extend',
+    x: 100,
+    y: 200,
+    label: '扩展组件',
+    type: 'extend',
     isEnd: true,
   },
   {

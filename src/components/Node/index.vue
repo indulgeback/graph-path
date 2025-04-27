@@ -1,5 +1,8 @@
 <template>
-  <div class="node-container">
+  <div
+    class="node-container"
+    :class="{ 'is-selected': data.isSelected, 'can-select': data.canSelect }"
+  >
     <div class="node-header-icon">
       <img :src="svgToDataURL(extendStr, '#ffffdd')" alt="extend" />
     </div>
@@ -32,6 +35,8 @@ type NodeData = {
   isEnd: boolean
   endType: string
   color: string
+  isSelected: boolean
+  canSelect: boolean
 }
 
 const node = ref<Node | null>(null)
@@ -42,6 +47,8 @@ const data = ref<NodeData>({
   isEnd: false,
   endType: '',
   color: '',
+  isSelected: false,
+  canSelect: true,
 })
 
 const svgToDataURL = (svgStr: string, fillColor?: string): string => {
@@ -77,6 +84,16 @@ onMounted(() => {
   justify-content: space-between;
   box-shadow: 2px 2px 5px 2px rgba(125, 133, 142, 0.15);
   transition: box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.node-container.can-select {
+  border: 2px dashed #1890ff;
+  cursor: pointer;
+}
+
+.node-container.is-selected {
+  border: 2px solid #1890ff;
 }
 
 .node-container:hover {
