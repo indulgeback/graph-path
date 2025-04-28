@@ -11,7 +11,7 @@
   <div class="graph-container">
     <h1 class="graph-container-title">StrategyGraph</h1>
     <div class="graph-container-item" id="graph-container2"></div>
-    <StrategyPanel @selectNode="resetNodeSelectable" />
+    <StrategyPanel @selectNode="resetNodeSelectable" @clearSelectedNodes="clearSelectedNodes" />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ import PathPanel from '@/components/Panel/PathPanel.vue'
 import StrategyPanel from '@/components/Panel/StrategyPanel.vue'
 
 const { initPathGraph, showStrategy, strategyList, clearStrategy } = usePathGraph()
-const { initStrategyGraph, resetNodeSelectable } = useStrategyGraph()
+const { initStrategyGraph, resetNodeSelectable, clearSelectedNodes } = useStrategyGraph()
 
 onMounted(() => {
   initPathGraph('graph-container1')

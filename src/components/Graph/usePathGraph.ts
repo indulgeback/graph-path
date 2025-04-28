@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { GraphManager } from '@/components/Graph/GraphManager'
 import { STRATEGY_CONFIGS } from '@/config/strategies'
 import { findMinimalSubGraph } from '@/components/Graph/utils'
+import Swal from 'sweetalert2'
 
 export type Strategy = {
   strategyId: number
@@ -27,6 +28,7 @@ const usePathGraph = () => {
     graphManager.initGraph(containerId)
     graphInstance.value = graphManager.graph as Graph
     initStrategy()
+    initEvents()
   }
 
   const initStrategy = () => {
@@ -52,6 +54,17 @@ const usePathGraph = () => {
           strategyColor: getColorByIndex(config.strategyId),
         })
       }
+    })
+  }
+
+  const initEvents = () => {
+    graphInstance.value?.on('node:click', (e) => {
+      Swal.fire({
+        title: 'DEVICE INFO',
+        text: `Device id: ${e.cell.prop('data/label')}\nDevice Type: ${e.cell.prop('data/type')}`,
+        icon: 'success',
+        confirmButtonText: 'Cool',
+      })
     })
   }
 

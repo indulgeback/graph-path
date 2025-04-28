@@ -12,16 +12,20 @@
     <div class="panel-item" v-for="node in 5" :key="node">
       <div class="panel-item-title" @click="selectNode('path', node)">选择路径节点 {{ node }}</div>
     </div>
+    <div class="panel-item">
+      <div class="panel-item-title" @click="clearSelectedNodes">清除已选节点</div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { Notyf } from 'notyf'
-import 'notyf/notyf.min.css' // for React, Vue and Svelte
+import 'notyf/notyf.min.css'
 import ArrowDownCircle from '~icons/mdi/arrow-down-circle'
 
 const emit = defineEmits<{
   (e: 'selectNode', type: 'start' | 'path', node: number): void
+  (e: 'clearSelectedNodes'): void
 }>()
 
 const notyf = new Notyf({
@@ -54,6 +58,10 @@ const selectNode = (type: 'start' | 'path', node: number = 0) => {
     type: 'custom',
   })
   emit('selectNode', type, node)
+}
+
+const clearSelectedNodes = () => {
+  emit('clearSelectedNodes')
 }
 </script>
 <style scoped>
