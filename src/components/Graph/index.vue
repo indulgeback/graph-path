@@ -1,6 +1,6 @@
 <template>
   <div class="graph-container">
-    <h1 class="graph-container-title">路径展示图</h1>
+    <h1 class="graph-container-title">PathGraph</h1>
     <div class="graph-container-item" id="graph-container1"></div>
     <PathPanel
       :strategyList="strategyList"
@@ -9,7 +9,7 @@
     />
   </div>
   <div class="graph-container">
-    <h1 class="graph-container-title">策略选择图</h1>
+    <h1 class="graph-container-title">StrategyGraph</h1>
     <div class="graph-container-item" id="graph-container2"></div>
     <StrategyPanel @selectNode="resetNodeSelectable" />
   </div>
