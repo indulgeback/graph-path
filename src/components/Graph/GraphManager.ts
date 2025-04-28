@@ -13,7 +13,7 @@ type NodeConfig = {
   x: number
   y: number
   label: string
-  type: 'validator' | 'safe' | 'receiver'
+  type: 'validator' | 'safe' | 'receiver' | 'extend'
   endType?: string
   showTag?: boolean
   isEnd?: boolean

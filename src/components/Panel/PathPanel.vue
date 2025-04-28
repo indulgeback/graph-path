@@ -30,15 +30,7 @@ import { toRefs, ref } from 'vue'
 import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css' // for React, Vue and Svelte
 import ArrowDownCircle from '~icons/mdi/arrow-down-circle'
-import { Edge, Node } from '@antv/x6'
-
-type Strategy = {
-  strategyId: number
-  strategySource: Node
-  strategyTarget: Node[]
-  strategyPaths: Edge[][]
-  strategyColor: string
-}
+import type { Strategy } from '@/components/Graph/usePathGraph'
 
 const props = defineProps<{
   strategyList: Strategy[]

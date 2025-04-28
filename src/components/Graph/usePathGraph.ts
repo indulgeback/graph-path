@@ -190,7 +190,7 @@ const usePathGraph = () => {
     graphInstance,
     initPathGraph,
     showStrategy,
-    strategyList,
+    strategyList: strategyList.value as Strategy[],
     clearStrategy,
     graphManager,
   }
