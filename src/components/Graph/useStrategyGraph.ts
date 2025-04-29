@@ -100,7 +100,7 @@ const useStrategyGraph = () => {
 
   const clearSelectedNodes = () => {
     markedNodesMap.value.clear()
-    updateNodesDisplay()
+    resetNodeSelectable('start', 0)
   }
 
   return {

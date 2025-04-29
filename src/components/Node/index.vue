@@ -4,7 +4,7 @@
     :class="{ 'is-selected': data.isSelected, 'can-select': data.canSelect }"
   >
     <div class="node-header-icon">
-      <img :src="svgToDataURL(extendStr, '#ffffdd')" alt="extend" />
+      <img :src="svgToDataURL(extendStr)" alt="extend" />
     </div>
     <div class="node-title">
       <div>{{ data.label }}</div>
