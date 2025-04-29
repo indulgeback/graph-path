@@ -45,7 +45,6 @@ const usePathGraph = () => {
 
       if (source && targets.length) {
         const paths = findMinimalSubGraph(source, targets, graphManager.edges)
-
         strategyList.value.push({
           strategyId: config.strategyId,
           strategySource: source,
@@ -69,6 +68,32 @@ const usePathGraph = () => {
   }
 
   const showStrategy = (strategyId: number) => {
+    if (animationStore.value.has(strategyId)) {
+      animationStore.value.forEach((_, key) => {
+        if (key !== strategyId) {
+          removeAnimation(key)
+        }
+      })
+
+      strategyList.value.forEach((strategy) => {
+        if (strategy.strategyId !== strategyId) {
+          strategy.strategySource.prop('data/showTag', false)
+          strategy.strategySource.prop('data/color', '')
+          strategy.strategyTarget.forEach((target) => {
+            target.prop('data/showTag', false)
+            target.prop('data/color', '')
+            target.prop('data/endType', '')
+          })
+        }
+      })
+
+      const currentStrategy = strategyList.value.find((s) => s.strategyId === strategyId)
+      if (currentStrategy) {
+        updateNodeStyles(currentStrategy as Strategy)
+      }
+      return
+    }
+
     removeAllAnimations()
 
     const strategy = strategyList.value.find((s) => s.strategyId === strategyId)
@@ -97,18 +122,28 @@ const usePathGraph = () => {
     strategyId: number,
     tokens: AnimationToken[] = [],
   ) => {
+    // 创建一个集合来跟踪已经添加了动画的边的ID
+    const animatedEdgeIds = new Set<string>()
+
     allPaths.forEach((pathEdges) => {
       const color = getColorByIndex(strategyId)
       pathEdges.forEach((edge) => {
-        const token = createAnimationToken(edge, color)
-        if (token) {
-          tokens.push(token)
-          edge.attr({
-            line: {
-              stroke: color,
-              strokeWidth: 2,
-            },
-          })
+        // 检查这条边是否已经添加了动画
+        const edgeId = edge.id
+        if (!animatedEdgeIds.has(edgeId)) {
+          // 记录这条边已经添加了动画
+          animatedEdgeIds.add(edgeId)
+
+          const token = createAnimationToken(edge, color)
+          if (token) {
+            tokens.push(token)
+            edge.attr({
+              line: {
+                stroke: color,
+                strokeWidth: 2,
+              },
+            })
+          }
         }
       })
     })

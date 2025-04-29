@@ -39,17 +39,14 @@ const useStrategyGraph = () => {
       if (node) {
         node.prop('data/showTag', true)
         node.prop('data/color', '#1890ff')
+        // 所有已标记的节点都设置为选中状态
+        node.prop('data/isSelected', true)
 
         // 设置适当的endType
         if (mode === 'start') {
           node.prop('data/endType', '始')
         } else {
           node.prop('data/endType', mode)
-        }
-
-        // 如果是当前模式的节点，则设为选中状态
-        if (mode === currentMode.value) {
-          node.prop('data/isSelected', true)
         }
       }
     })

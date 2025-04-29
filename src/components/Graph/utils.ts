@@ -35,6 +35,7 @@ export const findMinimalSubGraph = (start: Node, targets: Node[], allEdges: Edge
 
   // 存储目标节点id集合，用于快速查找
   const requiredNodes = new Set(targets.map((t) => t.id))
+
   // 用于去重的路径集合
   const visitedPaths = new Set<string>()
   // 存储子图中的所有节点
@@ -108,13 +109,16 @@ export const findMinimalSubGraph = (start: Node, targets: Node[], allEdges: Edge
   const paths = search(start.id)
 
   // 4. 获取子图中所有互相连接的边
+  // 子图定义：边的source和target都是目标节点集合的元素的边的集合
   const subGraphEdges: Edge[] = []
-  // 遍历所有边，找出子图中节点之间的所有连接
+
+  // 遍历所有边，找出符合子图定义的边
   allEdges.forEach((edge) => {
     const source = edge.getSourceCell()!.id
     const target = edge.getTargetCell()!.id
-    // 如果边的两个端点都在子图中，则这条边属于子图
-    if (subGraphNodes.has(source) && subGraphNodes.has(target)) {
+
+    // 只有当边的两个端点都在目标节点集合中（包括起始节点）时，才将这条边加入子图
+    if (requiredNodes.has(source) && requiredNodes.has(target)) {
       subGraphEdges.push(edge)
     }
   })

@@ -40,4 +40,9 @@ export const STRATEGY_CONFIGS: StrategyConfig[] = [
     source: 'receiver1',
     targets: ['receiver2'],
   },
+  {
+    strategyId: 8,
+    source: 'validator',
+    targets: ['receiver2', 'receiver3', 'receiver4', 'receiver5'],
+  },
 ]

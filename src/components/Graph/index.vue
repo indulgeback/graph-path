@@ -34,7 +34,7 @@ onMounted(() => {
 
 <style scoped>
 .graph-container {
-  height: 80vh;
+  height: calc(100vh - 40px);
   position: relative;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
