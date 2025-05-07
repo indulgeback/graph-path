@@ -14,10 +14,7 @@
     >
       <div class="panel-item-legend" :style="{ backgroundColor: strategy.strategyColor }"></div>
       <div class="panel-item-title">
-        <span
-          >策略 {{ strategy.strategyId }} : {{ strategy.strategySource.data.label }} -
-          {{ strategy.strategyTarget.map((target) => target.data.label).join(' - ') }}</span
-        >
+        <span>策略 {{ strategy.strategyId }} </span>
       </div>
     </div>
     <div class="panel-item" @click="clearStrategy">

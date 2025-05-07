@@ -32,24 +32,51 @@ const usePathGraph = () => {
   }
 
   const initStrategy = () => {
-    const strategySet = STRATEGY_CONFIGS.map((config) => ({
-      ...config,
-      targets: [...new Set(config.targets)],
-    }))
-
-    strategySet.forEach((config) => {
-      const source = graphManager.nodes.get(config.source)
-      const targets = config.targets
-        .map((id) => graphManager.nodes.get(id))
+    STRATEGY_CONFIGS.forEach((config) => {
+      const strategyPaths: Edge[][] = []
+      const sourceNode = graphManager.nodes.get(config.sourceNode)
+      const allTargets: Node[] = config.targetNodes
+        .map((targetId) => graphManager.nodes.get(targetId))
         .filter(Boolean) as Node[]
 
-      if (source && targets.length) {
-        const paths = findMinimalSubGraph(source, targets, graphManager.edges)
+      // 处理策略中的每条边
+      for (const edge of config.edges) {
+        const sourceId = edge.source
+        const targetId = edge.target
+
+        // 获取起点和终点节点
+        const source = graphManager.nodes.get(sourceId)
+        const target = graphManager.nodes.get(targetId)
+
+        // 如果找不到节点，跳过路径查找
+        if (!source || !target) {
+          continue
+        }
+
+        // 检查拓扑图中是否有从source到target的直接边
+        const directEdges = graphManager.edges.filter(
+          (e) => e.getSourceCell()?.id === sourceId && e.getTargetCell()?.id === targetId,
+        )
+
+        if (directEdges.length > 0) {
+          // 如果有直接边，使用它们
+          strategyPaths.push(directEdges)
+        } else {
+          // 如果没有直接边，找出从source到target的所有可能路径
+          const paths = findMinimalSubGraph(source, [target], graphManager.edges)
+          if (paths.length > 0) {
+            strategyPaths.push(...paths)
+          }
+        }
+      }
+
+      // 只要有源节点和目标节点，就创建策略（即使没有路径）
+      if (sourceNode && allTargets.length > 0) {
         strategyList.value.push({
           strategyId: config.strategyId,
-          strategySource: source,
-          strategyTarget: targets,
-          strategyPaths: paths,
+          strategySource: sourceNode,
+          strategyTarget: allTargets,
+          strategyPaths: strategyPaths,
           strategyColor: getColorByIndex(config.strategyId),
         })
       }
